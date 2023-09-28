@@ -42,7 +42,7 @@ app.post('/invite', async (req, res) => {
         employer: data.company_name,
         companyId: data.company_id,
         subject: "Setup your Plannly Health Account",
-        setup_user_link: `http://localhost:3000/activate-account?email=${data.email}&sid=${'password'}&cid=${data.company_id}`
+        setup_user_link: `http://localhost:3000/activate-account?email=${data.email}&sid=password&cid=${data.company_id}`
       }
     });
     res.status(200).json({ error: false });
