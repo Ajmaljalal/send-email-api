@@ -14,6 +14,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 
+
+
+
+
+
 app.use((req: any, res: any, next: any) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -25,6 +30,10 @@ app.use((req: any, res: any, next: any) => {
   next();
 });
 
+
+app.use('/', (req, res) => {
+  res.status(200).json('OK');
+});
 
 app.listen(config.server.port, () => {
   console.info(`Email server listening on ${config.server.hostname}:${config.server.port}`)
