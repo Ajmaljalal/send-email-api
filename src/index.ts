@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import config from './configs/base';
+import { sendEmailWithTemplateService } from './services/send-email';
 
 const app = express();
 
@@ -14,11 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-
-
-
-
-
+// CORS
 app.use((req: any, res: any, next: any) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -30,9 +27,29 @@ app.use((req: any, res: any, next: any) => {
   next();
 });
 
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Email server is running' });
+})
 
-app.use('/', (req, res) => {
-  res.status(200).json('OK');
+app.post('/invite', async (req, res) => {
+  const { userData } = req.body;
+  try {
+    await sendEmailWithTemplateService({
+      to_email: userData.email,
+      type: 'invite-user',
+      data: {
+        name: userData.first_name,
+        employer: userData.company_name,
+        companyId: userData.company_id,
+        subject: "Setup your Plannly Health Account",
+        setup_user_link: `http://localhost:3000/activate-account?email=${userData.email}&sid=${'password'}&cid=${userData.company_id}`
+      }
+    });
+    res.status(200).json({ error: false });
+
+  } catch (error: any) {
+    res.status(500).json({ error: true, message: error.message });
+  }
 });
 
 app.listen(config.server.port, () => {

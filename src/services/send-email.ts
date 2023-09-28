@@ -36,7 +36,7 @@ export const sendRawEmailService = async (request: SendEmailRequest) => {
 
 export const sendEmailWithTemplateService = async (request: any) => {
   const msg = {
-    to: request.toEmail,
+    to: request.to_email,
     from: 'no-reply@lannlyhealth.com',
     templateId: templateIds[request.type],
     dynamic_template_data: request.data,
