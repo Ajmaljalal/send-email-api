@@ -32,8 +32,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/invite', async (req, res) => {
-  console.log(req.body)
-  const { data } = req.body;
+  const data = req.body;
   try {
     await sendEmailWithTemplateService({
       to_email: data.email,
@@ -49,7 +48,8 @@ app.post('/invite', async (req, res) => {
     res.status(200).json({ error: false });
 
   } catch (error: any) {
-    res.status(500).json({ error: true, message: error.message });
+    console.log('ERROR', error.message)
+    res.status(500).json({ error: true, message: error.message, email: data.email });
   }
 });
 
