@@ -3,7 +3,7 @@ import SendgridMail from "../configs/sendgrid";
 
 const templateIds: any = {
   "password-reset": "d-a27fdf6c8ed04873b25c662230c96857",
-  "invite-user": "d-76e3ea4d358f4a58850bc5fa58ad6194",
+  "invite-user": "d-7a81b83227d34ac2a8af138cf6e19f57",
 }
 
 type SendEmailRequest = {
